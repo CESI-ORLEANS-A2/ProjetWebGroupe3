@@ -1,0 +1,71 @@
+:root {
+    --background-color: #F8FBFD;
+}
+
+.bgPolygon {
+    overflow: hidden;
+}
+
+div.bgPolygon {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    overflow: hidden;
+
+    background-color: var(--background-color);
+
+    z-index: -10;
+
+    top: -100%;
+    left: -100%;
+
+    perspective: 5px;
+
+    svg:nth-child(1) {
+        position: absolute;
+        top: 50%;
+        left: 90%;
+        width: 25%;
+        height: 50%;
+        z-index: -1;
+
+        overflow: hidden;
+
+        transform: translateZ(-1px);
+    }
+
+    svg:nth-child(2) {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: 25%;
+        height: 50%;
+        z-index: -1;
+
+        overflow: hidden;
+
+        transform: translateZ(-2px);
+    }
+
+    /* svg:nth-child(3) {
+        position: fixed;
+        top: 50%;
+        left: 90%;
+        width: 25%;
+        height: 50%;
+        z-index: -1;
+
+        overflow: hidden;
+    }
+
+    svg:nth-child(4) {
+        position: fixed;
+        top: 50%;
+        left: 90%;
+        width: 25%;
+        height: 50%;
+        z-index: -1;
+
+        overflow: hidden;
+    } */
+}
