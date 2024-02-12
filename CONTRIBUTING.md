@@ -16,15 +16,20 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 - [I Have a Question](#i-have-a-question)
 - [I Want To Contribute](#i-want-to-contribute)
-  - [Reporting Bugs](#reporting-bugs)
-  - [Suggesting Enhancements](#suggesting-enhancements)
-  - [Your First Code Contribution](#your-first-code-contribution)
-  - [Improving The Documentation](#improving-the-documentation)
+  - [Reporting Bugs](#reporting-bugs)
+    - [Before Submitting a Bug Report](#before-submitting-a-bug-report)
+    - [How Do I Submit a Good Bug Report?](#how-do-i-submit-a-good-bug-report)
+  - [Suggesting Enhancements](#suggesting-enhancements)
+    - [Before Submitting an Enhancement](#before-submitting-an-enhancement)
+    - [How Do I Submit a Good Enhancement Suggestion?](#how-do-i-submit-a-good-enhancement-suggestion)
+- [Pull Requests](#pull-requests)
 - [Styleguides](#styleguides)
-  - [Commit Messages](#commit-messages)
-- [Join The Project Team](#join-the-project-team)
-
-
+  - [JavaScript Styleguide](#javascript-styleguide)
+  - [HTML Styleguide](#html-styleguide)
+  - [PHP Styleguide](#php-styleguide)
+  - [CSS Styleguide](#css-styleguide)
+  - [Documentation Styleguide](#documentation-styleguide)
+  - [Git Commit Messages](#git-commit-messages)
 
 ## I Have a Question
 
@@ -39,21 +44,6 @@ If you then still feel the need to ask a question and need clarification, we rec
 - Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
 
 We will then take care of the issue as soon as possible.
-
-<!--
-You might want to create a separate issue tag for questions and include it in this description. People should then tag their issues accordingly.
-
-Depending on how large the project is, you may want to outsource the questioning, e.g. to Stack Overflow or Gitter. You may add additional contact and information possibilities:
-- IRC
-- Slack
-- Gitter
-- Stack Overflow tag
-- Blog
-- FAQ
-- Roadmap
-- E-Mail List
-- Forum
--->
 
 ## I Want To Contribute
 
@@ -72,11 +62,11 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/CESI-ORLEANS-A2/ProjetWebGroupe3/issues?q=label%3Abug).
 - Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
-  - Stack trace (Traceback)
-  - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-  - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
-  - Possibly your input and the output
-  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+- Stack trace (Traceback)
+- OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
+- Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
+- Possibly your input and the output
+- Can you reliably reproduce the issue? And can you also reproduce it with older versions?
 
 <!-- omit in toc -->
 #### How Do I Submit a Good Bug Report?
@@ -134,9 +124,11 @@ The process described here has several goals:
 
 Please follow these steps to have your contribution considered by the maintainers:
 
-1. Follow all instructions in the template.
-2. Follow the [styleguides](#styleguides).
-3. After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing. If they're not, make the required updates.
+1. Follow the [styleguides](#styleguides).
+2. After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing. If they're not, make the required updates.
+3. You may be asked to make changes to your pull request. If so, add more commits to your branch and push them – they will automatically go into the existing pull request.
+4. Two maintainers must approve the pull request before it can be merged.
+5. After the pull request is approved, you may merge the pull request. If you do not have permission to do that, you may request the reviewer to do it for you.
 
 ## Styleguides
 ### JavaScript Styleguide
