@@ -39,41 +39,23 @@ class Database {
         return $this->connection->getPdo();
     }
 
-    public function executeQuery($query, $params = []) {
+    public function prepare($query) {
+        return $this->connection->getPdo()->prepare($query);
+    }
+
+    public function prepareAndExecute($query, $params = []) {
         $stmt = $this->connection->getPdo()->prepare($query);
         $stmt->execute($params);
         return $stmt;
     }
 
     public function fetchAll($query, $params = []) {
-        $stmt = $this->executeQuery($query, $params);
+        $stmt = $this->prepareAndExecute($query, $params);
         return $stmt->fetchAll();
     }
 
     public function fetch($query, $params = []) {
-        $stmt = $this->executeQuery($query, $params);
+        $stmt = $this->prepareAndExecute($query, $params);
         return $stmt->fetch();
-    }
-
-    public function insert($table, $data) {
-        $columns = implode(", ", array_keys($data));
-        $values = ":" . implode(", :", array_keys($data));
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-        $this->executeQuery($query, $data);
-    }
-
-    public function update($table, $data, $condition) {
-        $set = "";
-        foreach ($data as $column => $value) {
-            $set .= "$column = :$column, ";
-        }
-        $set = rtrim($set, ", ");
-        $query = "UPDATE $table SET $set WHERE $condition";
-        $this->executeQuery($query, $data);
-    }
-
-    public function delete($table, $condition) {
-        $query = "DELETE FROM $table WHERE $condition";
-        $this->executeQuery($query);
     }
 }
