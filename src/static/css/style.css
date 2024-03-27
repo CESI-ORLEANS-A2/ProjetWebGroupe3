@@ -314,11 +314,19 @@
   --background-color-darker: var(--color-teal-300);
   --primary-color: var(--color-teal-500);
   --secondary-color: var(--color-teal-400);
+  --popout : cubic-bezier(.16,.45,.26,1.62);
+
 }
 
 body {
   padding: 0;
   margin: 0;
+
+  font-family: "Roboto", sans-serif;
+}
+
+body a {
+  text-decoration: none;
 }
 
 .parallaxWrapper {
@@ -332,7 +340,7 @@ body {
 
 .parallaxBg {
   width: 100%;
-  height: 0%;
+  height: auto;
 
   overflow: hidden;
   position: absolute;
@@ -422,32 +430,625 @@ body {
 }
 
 div.bg {
-    position: absolute;
-    top: 0;
-    
-    width: 100%;
-    height: 100%;
-    
-    background-color: var(--background-color);
-    z-index: -10;
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--background-color);
+  z-index: -10;
 }
 
-.search-bar {
-  position: relative;
+div.main {
+  background-color: var(--background-color);
+  width: 100%;
+  height: 100%;
+}
+
+div.row {
   display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+div.row.wrap {
+  flex-wrap: wrap;
+}
+
+div.row.center {
+  justify-content: center;
+}
+
+div.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: none;
+  gap: 2.5rem;
+
   justify-content: center;
   align-items: center;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  width: 50%;
-  background-color: var(--background-color-dark);
+
+  background-color: var(--color-neutral-300-alpha);
+
+  z-index: 10;
 }
 
-.search-input {
+#popupContainer {
+  position: relative;
+
+  max-height: 80%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+  margin: 2rem;
+  border-radius: 10px;
+
+  background-color: var(--background-color);
+
+  word-wrap: normal;
+
+  overflow: auto;
+}
+
+#popupContainer.showing {
+  animation: popup 300ms var(--popout);
+}
+
+#popupContainer.closing {
+  animation: popup 300ms var(--popout) reverse forwards;
+}
+
+#popupContainer.popup .title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#popupContainer.login .title {
+  align-self: center;
+  font-weight: bold;
+}
+
+#popupContainer.login .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+#popupContainer .login{
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+}
+
+#popupContainer .login .label {
+  font-weight: bold;
+
+  align-self: flex-start;
+}
+
+#popupContainer.login .password-error {
+  color: var(--color-red-500);
+  align-self: flex-start;
+
+  margin: 0.25rem 0;
+
+  word-wrap: break-word;
+}
+
+#popupContainer.login .input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#popupContainer.login .input-container .title {
+  align-self: self-start;
+
+  font-weight: bold;
+
+  padding: 0.25rem;
+
+  color: var(--color-neutral-500);
+}
+
+#popupContainer.login .input {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+
+  background-color: white;
+
+  border-radius: 5px;
+
+  padding: 0 0.5rem;
+
+  border: 1px solid white;
+
+  transition: all 200ms ease-in-out;
+}
+
+#popupContainer.login .input:hover {
+  border: 1px solid var(--primary-color);
+
+  background-color: var(--color-neutral-100);
+}
+
+#popupContainer.login .input span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#popupContainer.login .input .right { 
+  position: absolute;
+
+  right: 0.5rem;
+
+  height: 100%;
+
+  cursor: pointer;
+}
+
+#popupContainer.login .input .left { 
+  position: absolute;
+
+  left: 0.5rem;
+
+  height: 100%;
+
+  cursor: pointer;
+}
+
+#popupContainer.login input[type="password"],
+#popupContainer.login input[type="text"] {
   width: 100%;
+
+  border-radius: 5px;
+
   background-color: transparent;
-  color: var(--text-color-dark-100);
-  font-size: 1.5rem;
+  
   border: none;
+}
+
+#popupContainer.login input[type="text"]:focus {
+  outline: none;
+}
+
+#popupContainer.login button {
+  align-self: center;
+
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+
+  transition: background-color 300ms ease-in-out;
+}
+
+.divider {
+  align-self: center;
+
+  height: 1px;
+  width: 40%;
+  background-color: var(--color-neutral-500);
+  margin: 0.5rem 0;
+}
+
+.divider.small-margin {
+  margin: 0.1rem 0;
+}
+
+#popupContainer > .content {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+#popupContainer .content .no-icon {
+  margin-left: 2rem;
+}
+
+.content .sub-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin-left: 1rem;
+}
+
+a {
+  cursor: pointer;
+  color: var(--text-color-dark);
+}
+
+a.title {
+  text-decoration: none;
+  width: min-content
+}
+
+a.title:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--text-color-dark);
+}
+
+a[target="_blank"]::after {
+  content: "open_in_new";
+  font-family: "Material Symbols Outlined";
+  font-size: 0.80rem;
+  text-decoration: none;
+}
+
+#popupContainer .close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  margin: 0.5rem;
+  cursor: pointer;
+
+  color: var(--color-neutral-500);
+}
+
+.primary-button {
+  font-weight: bold;
+
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+
+  transition: background-color 300ms ease-in-out;
+}
+
+.primary-button:hover {
+  background-color: var(--secondary-color);
+}
+
+input[type="date"],
+input[type="password"],
+input[type="text"] {
+  margin: 0.25rem 0;
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-neutral-500);
+
+  transition: border 200ms ease-in-out;
+}
+
+input[type="date"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+}
+
+input[type="date"]:hover,
+input[type="password"]:hover,
+input[type="text"]:hover {
+  border: 1px solid var(--primary-color);
+  outline: none;
+}
+
+input[type="date"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+  text-transform: capitalize;
+
+  color: var(--color-neutral-500);
+}
+
+select {
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-neutral-500);
+
+  transition: border 200ms ease-in-out;
+}
+
+select:focus {
+  border: 1px solid var(--primary-color);
+}
+
+select:hover {
+  border: 1px solid var(--primary-color);
+}
+
+.rounded {
+  border-radius: 100%;
+
+  background-color: white;
+  border: 0.15rem solid var(--color-neutral-500);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+textarea {
+  font-size: small;
+
+  height: 80%;
+  width: 100%;
+
+  margin: 0.25rem 0;
+  border-radius: 5px;
+  border: 1px solid var(--color-neutral-500);
+
+  transition: border 200ms ease-in-out;
+
+  resize: none;
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (min-width: 0px) {
+  #popupContainer {
+    min-width: fit-content;
+    width: 30%;
+
+    font-size: medium;
+  }
+
+  #popupContainer .content {
+    font-size: medium;
+  }
+  
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  #popupContainer {
+    max-width: 40%;
+  }
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px){
+  #popupContainer {
+    width: 50%;
+
+    margin: 15%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #popupContainer {
+    width: 60%;
+
+    margin: 10%;
+  }
+
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+.light-text {
+  font-size: medium;
+}
+
+.font-xs {
+  font-size: x-small;
+}
+
+.font-sm {
+  font-size: small
+}
+
+.font-md {
+  font-size: medium;
+}
+
+.font-lg {
+  font-size: large;
+}
+
+.font-xl {
+  font-size: x-large;
+}
+
+.xs {
+  width: 10%;
+}
+
+.sm {
+  width: 20%;
+}
+
+.md {
+  width: 30%;
+}
+
+.lg {
+  width: 40%;
+}
+
+.xl {
+  width: 50%;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.m-1 {
+  margin: 0.25rem;
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.m-3 {
+  margin: 0.75rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.none {
+  display: none;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.material-symbols-outlined {
+  user-select: none;
 }

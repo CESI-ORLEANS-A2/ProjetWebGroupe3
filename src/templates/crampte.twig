@@ -1,12 +1,13 @@
-{% extends "bg.twig" %} {% block content %}
+{% extends "bg.twig" %}
+
+{% block content %}
 <div>
   <h1>Crampte</h1>
   <p>
     Créer un compte pour accéder à l'ensemble des fonctionnalités de Crampte.
   </p>
   <div style="display: flex; flex-direction: column">
-    {% include "searchbar.twig" with { __placeholder: "Test..." } %} {% include
-    "searchbar.twig" %}
+    {% include "searchbar/searchbar.twig" with { __placeholder: "Test..." } %}
   </div>
   <h1>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam dignissimos

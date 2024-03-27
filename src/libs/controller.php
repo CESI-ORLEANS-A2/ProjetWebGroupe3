@@ -135,7 +135,7 @@ class ControllerAPI extends ControllerBase {
                     break;
             }
         } catch (\Throwable $th) {
-            $this->onError($th->getMessage());
+            return $this->onError($th->getMessage());
         }
 
         return $this->onSuccess('Operation successful');

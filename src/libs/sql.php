@@ -12,7 +12,7 @@ class DatabaseConnection {
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             // Set default fetch mode to associative array
-            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             
             // Additional PDO configurations if needed
             // ...
@@ -30,8 +30,17 @@ class DatabaseConnection {
 
 class Database {
     private $connection;
+    private $host;
+    private $dbname;
+    private $username;
+    private $password;
 
     public function __construct($host, $dbname, $username, $password) {
+        $this->host = $host;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
+
         $this->connection = new DatabaseConnection($host, $dbname, $username, $password);
     }
 
@@ -57,5 +66,52 @@ class Database {
     public function fetch($query, $params = []) {
         $stmt = $this->prepareAndExecute($query, $params);
         return $stmt->fetch();
+    }
+
+    public function __wakeup(){
+        $this->connection = new DatabaseConnection($this->host, $this->dbname, $this->username, $this->password);
+    }
+
+    public function __sleep(){
+        return ['host', 'dbname', 'username', 'password'];
+    }
+}
+
+class DBObjectInterface {
+    public function toArray() {
+        return get_object_vars($this);
+    }
+
+    public function __toString() {
+        return json_encode($this->toArray());
+    }
+
+    public function toObject() {
+        return (object) $this->toArray();
+    }
+
+    public function __serialize(){
+        return $this->toArray();
+    }
+
+    public function fromArray($data){
+        // Check
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    public function fromString($data){
+        $this->fromArray(json_decode($data, true));
+    }
+
+    public function fromObject($data){
+        $this->fromArray((array) $data);
+    }
+
+    public function __unserialize($data){
+        $this->fromArray($data);
     }
 }
